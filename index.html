@@ -158,9 +158,48 @@
       color: #555;
       text-align: right;
     }
+    
+    /* ESTILOS DO MENU HAMBÚRGUER (MÓVEL) */
+    .hamburger-menu {
+      display: none; /* Escondido por padrão em telas grandes */
+      cursor: pointer;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .hamburger-menu .bar {
+      width: 25px;
+      height: 3px;
+      background-color: #333;
+      border-radius: 2px;
+    }
 
-    /* CORREÇÃO PARA O BOTÃO NO CELULAR */
-    @media (max-width: 480px) {
+    /* CORREÇÕES PARA TELAS MENORES (RESPONSIVO) */
+    @media (max-width: 768px) {
+      /* Esconde o menu de navegação normal */
+      nav {
+        display: none;
+        position: absolute;
+        top: 65px; /* Altura do header */
+        left: 0;
+        width: 100%;
+        background-color: white;
+        flex-direction: column;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      }
+      /* Mostra o menu quando ele estiver ativo */
+      nav.active {
+        display: flex;
+      }
+      nav a {
+        margin: 0;
+        padding: 1rem;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      /* Mostra o ícone do menu hambúrguer */
+      .hamburger-menu {
+        display: flex;
+      }
       .hero .cta-btn {
         padding: 0.8rem 1.2rem;
         font-size: 1rem;
@@ -175,11 +214,16 @@
 
   <header>
     <h1>KINTSUK</h1>
-    <nav>
+    <nav id="main-nav">
       <a href="#features">Funcionalidades</a>
       <a href="#precos">Preços</a>
       <a href="#login">Login</a>
     </nav>
+    <div class="hamburger-menu" id="hamburger-btn">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
   </header>
 
   <section class="hero">
@@ -225,6 +269,15 @@
       <a href="#">Contato</a>
     </div>
   </footer>
+
+  <script>
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mainNav = document.getElementById('main-nav');
+
+    hamburgerBtn.addEventListener('click', () => {
+      mainNav.classList.toggle('active');
+    });
+  </script>
 
 </body>
 </html>
