@@ -6,6 +6,7 @@
   <title>KINTSUK - Suas Finanças Simples e Organizadas</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
+    /* ESTILOS GERAIS */
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
@@ -38,6 +39,22 @@
     nav a:hover {
       color: #2563eb;
     }
+    footer {
+      background: #111827;
+      color: #d1d5db;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    footer a {
+      color: #93c5fd;
+      margin: 0 0.5rem;
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* SEÇÃO HERO (PRINCIPAL) */
     .hero {
       text-align: center;
       padding: 4rem 2rem;
@@ -64,6 +81,8 @@
     .hero .cta-btn:hover {
       background: #f3f4f6;
     }
+
+    /* SEÇÃO DE FUNCIONALIDADES */
     .features {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -82,34 +101,78 @@
       color: #2563eb;
       margin-bottom: 0.5rem;
     }
+    
+    /* SEÇÃO DE DEPOIMENTOS (ESTILO WHATSAPP) */
     .testimonials {
       padding: 4rem 2rem;
-      text-align: center;
       background: #f9fafb;
     }
-    .testimonials p {
-      font-style: italic;
-      color: #374151;
-    }
-    footer {
-      background: #111827;
-      color: #d1d5db;
+    .testimonials h2 {
       text-align: center;
-      padding: 2rem 1rem;
+      margin-bottom: 2rem;
+      font-size: 1.8rem;
+      color: #333;
     }
-    footer a {
-      color: #93c5fd;
-      margin: 0 0.5rem;
-      text-decoration: none;
+    .testimonial-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
     }
-    footer a:hover {
-      text-decoration: underline;
+    .testimonial-bubble {
+      background-color: #ffffff;
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border: 1px solid #e5e7eb;
+      width: 90%;
+    }
+    .testimonial-bubble.client {
+      background-color: #dcf8c6;
+      align-self: flex-end;
+      border-radius: 12px 12px 0 12px;
+    }
+    .testimonial-bubble.client::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: -10px;
+      width: 20px;
+      height: 20px;
+      background: radial-gradient(circle at 0 0, transparent, transparent 10px, #dcf8c6 10px, #dcf8c6);
+    }
+    .testimonial-text {
+      margin: 0;
+      color: #333;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+    .testimonial-author {
+      margin-top: 0.75rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #555;
+      text-align: right;
+    }
+
+    /* CORREÇÃO PARA O BOTÃO NO CELULAR */
+    @media (max-width: 480px) {
+      .hero .cta-btn {
+        padding: 0.8rem 1.2rem;
+        font-size: 1rem;
+      }
+      .hero h2 {
+        font-size: 2rem;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
   <header>
     <h1>KINTSUK</h1>
     <nav>
@@ -119,14 +182,12 @@
     </nav>
   </header>
 
-  <!-- Hero Section -->
   <section class="hero">
     <h2>O Fim da Planilha de Gastos</h2>
     <p>Suas Finanças, Simples e Organizadas em um só lugar.</p>
     <a href="#cadastro" class="cta-btn">Comece a Organizar Agora (Grátis)</a>
   </section>
 
-  <!-- Funcionalidades -->
   <section id="features" class="features">
     <div class="feature">
       <h3>📊 Relatórios Visuais</h3>
@@ -142,14 +203,20 @@
     </div>
   </section>
 
-  <!-- Prova Social -->
-  <section class="testimonials">
-    <h2>O que dizem nossos usuários</h2>
-    <p>"Esse app mudou minha vida financeira. Nunca mais planilhas complicadas!"</p>
-    <p>- Usuário Exemplo</p>
+  <section id="testimonials" class="testimonials">
+    <h2>O que nossos primeiros usuários dizem</h2>
+    <div class="testimonial-container">
+      <div class="testimonial-bubble client">
+        <p class="testimonial-text">Nossa, finalmente um app que eu entendo! Minhas economias agradecem demais. Simples e direto ao ponto. <strong>#adeusplanilha</strong></p>
+        <div class="testimonial-author">- Ana S., Belo Horizonte</div>
+      </div>
+      <div class="testimonial-bubble client">
+        <p class="testimonial-text">Depois de 2 meses usando o Kintsuk, consegui quitar uma dívida que se arrastava há tempos. Ver os gráficos realmente me motivou. Recomendo demais!</p>
+        <div class="testimonial-author">- Marcos R., São Paulo</div>
+      </div>
+    </div>
   </section>
 
-  <!-- Footer -->
   <footer>
     <p>© 2025 KINTSUK. Todos os direitos reservados.</p>
     <div>
@@ -160,15 +227,4 @@
   </footer>
 
 </body>
-</html> 
-/* Regra para telas de celular */
-@media (max-width: 480px) {
-  .hero .cta-btn {
-    padding: 0.8rem 1.2rem; /* Diminui o espaçamento interno do botão */
-    font-size: 1rem;       /* Diminui um pouco o tamanho da fonte */
-  }
-
-  .hero h2 {
-    font-size: 2rem; /* Opcional: diminui o título principal também */
-  }
-}
+</html>
