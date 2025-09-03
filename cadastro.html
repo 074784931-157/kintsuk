@@ -3,298 +3,371 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crie sua Conta ou Faça Login - KINTSUK</title>
-    <meta name="description" content="Acesse sua conta ou crie um novo cadastro no KINTSUK para começar a organizar suas finanças de forma simples e inteligente.">
-    <meta name="keywords" content="login, cadastro, finanças, organização financeira, kintsuk">
-    <link rel="canonical" href="https://074784931-157.github.io/kintsuk/cadastro.html">
-    <meta property="og:title" content="Crie sua Conta ou Faça Login - KINTSUK">
-    <meta property="og:description" content="Acesse sua conta ou crie um novo cadastro no KINTSUK para começar a organizar suas finanças.">
-    <meta property="og:url" content="https://074784931-157.github.io/kintsuk/cadastro.html">
-    <meta property="og:type" content="website">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Dashboard - KINTSUK</title>
+    <meta name="robots" content="noindex, nofollow"> <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
     <style>
+        :root {
+            --primary-color: #2563eb;
+            --success-color: #22c55e;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --bg-color: #f3f4f6;
+            --card-bg-color: #ffffff;
+            --text-color: #374151;
+            --text-light-color: #6b7280;
+            --border-color: #e5e7eb;
+        }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f9fafb;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            background-color: var(--bg-color);
             margin: 0;
-            padding: 2rem 0;
+            color: var(--text-color);
         }
-        .container {
-            background-color: #ffffff;
-            padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-        }
-        .logo {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #2563eb;
-            margin-bottom: 1.5rem;
-        }
-        .tab-buttons {
+        .dashboard-container {
             display: flex;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            overflow: hidden;
+        }
+        /* Barra Lateral (Placeholder) */
+        .sidebar {
+            width: 80px;
+            background-color: var(--card-bg-color);
+            border-right: 1px solid var(--border-color);
+            /* Escondida em telas menores */
+            display: none; 
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 1.5rem;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 2rem;
         }
-        .tab-btn {
-            flex: 1;
-            padding: 0.8rem;
-            border: none;
-            background-color: #f9fafb;
-            cursor: pointer;
-            font-weight: 600;
-            color: #6b7280;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .tab-btn.active {
-            background-color: #2563eb;
-            color: white;
-        }
-        form { display: none; }
-        form.active { display: block; }
-        .form-group {
-            margin-bottom: 1.2rem;
-            text-align: left;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: #374151;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            box-sizing: border-box;
-            /* ===== CORREÇÃO PARA O ZOOM NO CELULAR ===== */
-            font-size: 16px; /* Evita o zoom automático no iOS */
-        }
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-bottom: 1.2rem;
-            font-size: 0.9rem;
-        }
-        .checkbox-group input[type="checkbox"] {
-            width: auto;
+        .welcome-message h1 {
+            font-size: 1.8rem;
             margin: 0;
-            height: 16px;
-            width: 16px;
-            min-width: 16px;
         }
-        .checkbox-group label {
-            margin-bottom: 0;
-            color: #4b5563;
-            font-weight: 400;
+        .welcome-message p {
+            margin: 0;
+            color: var(--text-light-color);
         }
-        .checkbox-group label a {
-            color: #2563eb;
-            text-decoration: none;
+        /* Estilo dos KPIs */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
-        .checkbox-group label a:hover {
-            text-decoration: underline;
-        }
-        .submit-btn {
-            width: 100%;
-            padding: 0.8rem;
-            background-color: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .submit-btn:hover { background-color: #1e40af; }
-        .link {
-            display: block;
-            margin-top: 1rem;
-            color: #2563eb;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-        .separator {
-            margin: 1.5rem 0;
-            color: #9ca3af;
-            font-size: 0.9rem;
-        }
-        .google-btn {
-            width: 100%;
-            padding: 0.8rem;
-            background-color: #ffffff;
-            color: #374151;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
+        .kpi-card {
+            background-color: var(--card-bg-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 5px solid;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+        }
+        .kpi-card.saldo { border-color: var(--primary-color); }
+        .kpi-card.receitas { border-color: var(--success-color); }
+        .kpi-card.despesas { border-color: var(--danger-color); }
+        .kpi-card.clientes { border-color: var(--warning-color); }
+        .kpi-card .title {
+            font-size: 0.9rem;
+            color: var(--text-light-color);
+            margin-bottom: 0.5rem;
+        }
+        .kpi-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        /* Layout Principal */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+        }
+        .main-card {
+            background-color: var(--card-bg-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 0.5rem;
+            margin-bottom: 1.5rem;
         }
-        .error-message {
-            color: #ef4444;
-            font-size: 0.8rem;
-            text-align: left;
-            margin-top: 0.25rem;
-            display: none;
+        .card-header h2 {
+            margin: 0;
+            font-size: 1.2rem;
         }
-        #toast-success {
-            visibility: hidden;
-            min-width: 250px;
-            background-color: #22c55e;
-            color: white;
-            text-align: center;
+        .card-header a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        /* Lista de Transações */
+        .transaction-list ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .transaction-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .transaction-list li:last-child { border-bottom: none; }
+        .transaction-info { display: flex; align-items: center; gap: 1rem; }
+        .transaction-icon {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .receita .transaction-icon { background-color: #dcfce7; color: var(--success-color); }
+        .despesa .transaction-icon { background-color: #fee2e2; color: var(--danger-color); }
+        .transaction-details h3 { font-size: 1rem; margin: 0; }
+        .transaction-details p { font-size: 0.9rem; margin: 0; color: var(--text-light-color); }
+        .transaction-amount { font-weight: 600; }
+        .transaction-amount.receita { color: var(--success-color); }
+        .transaction-amount.despesa { color: var(--danger-color); }
+        
+        /* Gráfico Placeholder */
+        .chart-placeholder {
+            width: 100%; height: 250px;
+            background: repeating-linear-gradient(45deg, #f3f4f6, #f3f4f6 10px, #e5e7eb 10px, #e5e7eb 20px);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-light-color); font-weight: 500;
             border-radius: 8px;
+        }
+        
+        /* Atalhos Rápidos */
+        .shortcuts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .shortcut-card {
+            background-color: var(--bg-color);
             padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .shortcut-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            color: var(--primary-color);
+        }
+        .shortcut-card i {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Botão Flutuante (FAB) */
+        .fab {
             position: fixed;
-            z-index: 101;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            transition: opacity 0.5s, visibility 0.5s, bottom 0.5s;
+            bottom: 2rem;
+            right: 2rem;
+            width: 56px;
+            height: 56px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+            cursor: pointer;
+            transition: transform 0.2s;
         }
-        #toast-success.show {
-            visibility: visible;
-            opacity: 1;
-            bottom: 50px;
+        .fab:hover { transform: scale(1.1); }
+
+        /* Skeletons de Carregamento */
+        .skeleton {
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            animation: pulse 1.5s infinite ease-in-out;
         }
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+        .skeleton-text { width: 70%; height: 20px; margin-bottom: 10px; }
+        .skeleton-title { width: 40%; height: 30px; margin-bottom: 15px; }
+        .skeleton-card { width: 100%; height: 120px; }
+        .skeleton-list-item { display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem; }
+        .skeleton-avatar { width: 40px; height: 40px; border-radius: 50%; }
+        .skeleton-line { flex: 1; height: 15px; }
+        .has-data { display: none; } /* Escondido por padrão */
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+        }
+        .empty-state h3 { font-size: 1.2rem; }
+        .empty-state p { color: var(--text-light-color); margin-bottom: 1.5rem; }
+        .empty-state .btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        
+        /* Toast (reutilizado) */
+        #toast { visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 8px; padding: 1rem; position: fixed; z-index: 101; left: 50%; transform: translateX(-50%); bottom: 30px; opacity: 0; transition: 0.5s; }
+        #toast.show { visibility: visible; opacity: 1; bottom: 50px; }
+        
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .main-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .main-content { padding: 1rem; }
+            header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="logo">KINTSUK</div>
+    <div class="dashboard-container">
+        <aside class="sidebar"></aside> <main class="main-content">
+            <header>
+                <div class="welcome-message">
+                    <h1 id="welcome-title">Seja bem-vindo 👋</h1>
+                    <p>Aqui está o resumo da sua vida financeira.</p>
+                </div>
+            </header>
 
-        <div class="tab-buttons">
-            <button class="tab-btn active" data-form="form-cadastro">Criar conta</button>
-            <button class="tab-btn" data-form="form-login">Entrar</button>
-        </div>
+            <div class="kpi-grid">
+                <div class="kpi-card skeleton-container"><div class="skeleton skeleton-card"></div></div>
+                <div class="kpi-card skeleton-container"><div class="skeleton skeleton-card"></div></div>
+                <div class="kpi-card skeleton-container"><div class="skeleton skeleton-card"></div></div>
+                <div class="kpi-card skeleton-container"><div class="skeleton skeleton-card"></div></div>
+                <div class="kpi-card saldo has-data">
+                    <span class="title">Saldo do Mês</span>
+                    <span class="value">R$ 513,00</span>
+                </div>
+                <div class="kpi-card receitas has-data">
+                    <span class="title">Total de Receitas</span>
+                    <span class="value">R$ 2.580,00</span>
+                </div>
+                <div class="kpi-card despesas has-data">
+                    <span class="title">Total de Despesas</span>
+                    <span class="value">R$ 2.067,00</span>
+                </div>
+                <div class="kpi-card clientes has-data">
+                    <span class="title">Clientes Ativos</span>
+                    <span class="value">12</span>
+                </div>
+            </div>
 
-        <form id="form-cadastro" class="active">
-            <div class="form-group">
-                <label for="nome">Nome completo</label>
-                <input type="text" id="nome" required>
+            <div class="main-grid">
+                <div class="left-column">
+                    <div class="main-card">
+                        <div class="card-header">
+                            <h2>Receitas vs Despesas</h2>
+                        </div>
+                        <div class="chart-placeholder">Gráfico em breve</div>
+                    </div>
+                    <div class="main-card" style="margin-top: 1.5rem;">
+                        <div class="card-header">
+                            <h2>Últimas Transações</h2>
+                            <a href="#">Ver todas</a>
+                        </div>
+                        <div class="transaction-list skeleton-container">
+                            <div class="skeleton-list-item"><div class="skeleton skeleton-avatar"></div> <div class="skeleton skeleton-line"></div></div>
+                            <div class="skeleton-list-item"><div class="skeleton skeleton-avatar"></div> <div class="skeleton skeleton-line"></div></div>
+                            <div class="skeleton-list-item"><div class="skeleton skeleton-avatar"></div> <div class="skeleton skeleton-line"></div></div>
+                        </div>
+                        <div class="transaction-list has-data">
+                            <ul>
+                                <li class="receita"><div class="transaction-info"><div class="transaction-icon"><i data-feather="arrow-down"></i></div><div class="transaction-details"><h3>Bônus emprego</h3><p>Salário</p></div></div><span class="transaction-amount receita">+ R$ 2.580,00</span></li>
+                                <li class="despesa"><div class="transaction-info"><div class="transaction-icon"><i data-feather="arrow-up"></i></div><div class="transaction-details"><h3>Aluguel mensal</h3><p>Moradia</p></div></div><span class="transaction-amount despesa">- R$ 990,00</span></li>
+                                <li class="despesa"><div class="transaction-info"><div class="transaction-icon"><i data-feather="arrow-up"></i></div><div class="transaction-details"><h3>Curso FlutterFlow</h3><p>Capacitação</p></div></div><span class="transaction-amount despesa">- R$ 697,00</span></li>
+                            </ul>
+                        </div>
+                        <div class="empty-state" style="display: none;">
+                            <i data-feather="coffee" style="width: 48px; height: 48px; color: var(--text-light-color); margin-bottom: 1rem;"></i>
+                            <h3>Nenhuma transação registrada.</h3>
+                            <p>Adicione sua primeira receita ou despesa para começar.</p>
+                            <a href="#" class="btn">Adicionar Transação</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-column">
+                    <div class="main-card">
+                        <div class="card-header">
+                            <h2>Atalhos Rápidos</h2>
+                        </div>
+                        <div class="shortcuts-grid">
+                            <a href="#" class="shortcut-card"><i data-feather="plus-circle"></i> Nova Transação</a>
+                            <a href="#" class="shortcut-card"><i data-feather="user-plus"></i> Novo Cliente</a>
+                            <a href="#" class="shortcut-card"><i data-feather="file-text"></i> Nova Cobrança</a>
+                            <a href="#" class="shortcut-card"><i data-feather="calendar"></i> Novo Agendamento</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="email-cadastro">E-mail</label>
-                <input type="email" id="email-cadastro" required>
-                <div class="error-message" data-for="email-cadastro">Formato de e-mail inválido.</div>
-            </div>
-            <div class="form-group">
-                <label for="senha-cadastro">Senha</label>
-                <input type="password" id="senha-cadastro" required>
-                <div class="error-message" data-for="senha-cadastro">Senha deve ter pelo menos 8 caracteres.</div>
-            </div>
-            <div class="form-group checkbox-group">
-                <input type="checkbox" id="aceitar-termos" required>
-                <label for="aceitar-termos">Eu aceito os <a href="termos.html" target="_blank">Termos de Serviço</a></label>
-            </div>
-            <button type="submit" class="submit-btn">Criar conta</button>
-        </form>
-        
-        <form id="form-login">
-            <div class="form-group">
-                <label for="email-login">E-mail</label>
-                <input type="email" id="email-login" required>
-            </div>
-            <div class="form-group">
-                <label for="senha-login">Senha</label>
-                <input type="password" id="senha-login" required>
-            </div>
-            <a href="#" class="link">Esqueci minha senha</a>
-            <button type="submit" class="submit-btn">Entrar</button>
-        </form>
-
-        <div class="separator">ou</div>
-
-        <button class="google-btn">
-            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo" width="18" height="18">
-            Entrar com Google
-        </button>
+        </main>
     </div>
 
-    <div id="toast-success">
-        Cadastro realizado com sucesso! <a href="dashboard.html" class="link" style="color:white; text-decoration: underline;">Acessar o Dashboard</a>
-    </div>
-
+    <a class="fab">
+        <i data-feather="plus" style="width: 28px; height: 28px;"></i>
+    </a>
+    
+    <div id="toast"></div>
 
     <script>
+        feather.replace();
+
         document.addEventListener('DOMContentLoaded', () => {
-            const tabButtons = document.querySelectorAll('.tab-btn');
-            const forms = document.querySelectorAll('form');
-
-            tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-
-                    const formIdToShow = button.getAttribute('data-form');
-                    forms.forEach(form => {
-                        if (form.id === formIdToShow) {
-                            form.classList.add('active');
-                        } else {
-                            form.classList.remove('active');
-                        }
-                    });
-                });
-            });
-            
-            const formCadastro = document.getElementById('form-cadastro');
-            formCadastro.addEventListener('submit', (event) => {
-                event.preventDefault();
-                
-                document.querySelectorAll('#form-cadastro .error-message').forEach(el => el.style.display = 'none');
-
-                let isValid = true;
-                const email = document.getElementById('email-cadastro').value;
-                const senha = document.getElementById('senha-cadastro').value;
-
-                if (!email.includes('@') || !email.includes('.')) {
-                    document.querySelector('.error-message[data-for="email-cadastro"]').style.display = 'block';
-                    isValid = false;
-                }
-                if (senha.length < 8) {
-                    document.querySelector('.error-message[data-for="senha-cadastro"]').style.display = 'block';
-                    isValid = false;
-                }
-                
-                if (isValid) {
-                    showToast('Cadastro realizado com sucesso!');
-                }
-            });
-
-            const formLogin = document.getElementById('form-login');
-            formLogin.addEventListener('submit', (event) => {
-                event.preventDefault();
-                window.location.href = 'dashboard.html';
-            });
-
-            function showToast(message) {
-                const toast = document.getElementById('toast-success');
-                toast.innerHTML = `${message} <a href="dashboard.html" class="link" style="color:white; text-decoration: underline;">Acessar o Dashboard</a>`;
-                toast.classList.add('show');
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 4000);
+            const userName = localStorage.getItem('kintsukUserName');
+            if (userName) {
+                const firstName = userName.split(' ')[0];
+                document.getElementById('welcome-title').innerHTML = `Seja bem-vindo, ${firstName} 👋`;
             }
-        });
-    </script>
+            
+            // Simulação de Carregamento de Dados (Versão de 2.5 segundos)
+            setTimeout(() => {
+                const skeletons = document.querySelectorAll('.skeleton-container');
+                const realData = document.querySelectorAll('.has-data');
+                
+                skeletons.forEach(el => el.style.display = 'none');
+                realData.forEach(el => el.style.display = 'block');
+                
+                document.querySelector('.kpi-grid').style.display = 'grid';
+                document.querySelector('.transaction-list.has-data').style.display = 'block';
 
+            }, 2500); // Tempo original de 2.5 segundos
+        });
+
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            toast.textContent = message;
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+
+        document.querySelectorAll('.shortcut-card, .fab').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                showToast('Funcionalidade em desenvolvimento!');
+            });
+        });
+
+    </script>
 </body>
 </html>
