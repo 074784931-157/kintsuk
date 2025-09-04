@@ -31,39 +31,39 @@
             display: flex;
         }
         
-        /* ===== NOVA BARRA LATERAL DE NAVEGAÇÃO ===== */
+        /* ===== BARRA LATERAL (SIDEBAR) - LÓGICA CORRIGIDA ===== */
         .sidebar {
             width: var(--sidebar-width);
             background-color: var(--card-bg-color);
             border-right: 1px solid var(--border-color);
             height: 100vh;
-            position: sticky;
+            position: fixed; /* MUDADO PARA FIXED */
             top: 0;
+            left: 0;
+            z-index: 200; /* Garante que fique acima */
             display: flex;
             flex-direction: column;
             transition: width 0.3s ease;
         }
-        .sidebar.collapsed {
-            width: var(--sidebar-width-collapsed);
-        }
         .sidebar-header {
             padding: 1.5rem;
+            display: flex;
+            align-items: center;
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--primary-color);
             border-bottom: 1px solid var(--border-color);
         }
         .sidebar-header .logo-text {
+            opacity: 1;
             transition: opacity 0.2s ease;
-        }
-        .sidebar.collapsed .logo-text {
-            opacity: 0;
         }
         .sidebar-nav {
             flex-grow: 1;
             list-style: none;
             padding: 1rem 0;
             margin: 0;
+            overflow-y: auto; /* Para telas pequenas */
         }
         .sidebar-nav a {
             display: flex;
@@ -74,26 +74,45 @@
             font-weight: 500;
             white-space: nowrap;
             overflow: hidden;
+            gap: 1rem;
         }
         .sidebar-nav a:hover, .sidebar-nav a.active {
             background-color: var(--bg-color);
             color: var(--primary-color);
         }
         .sidebar-nav a i {
-            margin-right: 1rem;
-            min-width: 24px; /* Garante alinhamento quando colapsado */
+            min-width: 24px;
+        }
+        .sidebar-nav a span {
+            opacity: 1;
+            transition: opacity 0.2s ease;
         }
         .sidebar-footer {
             padding: 1rem 0;
             border-top: 1px solid var(--border-color);
         }
-        /* =============================================== */
 
+        /* ESTADO COLAPSADO PARA DESKTOP */
+        .sidebar.collapsed {
+            width: var(--sidebar-width-collapsed);
+        }
+        .sidebar.collapsed .logo-text,
+        .sidebar.collapsed .sidebar-nav a span {
+            opacity: 0;
+            pointer-events: none; /* Impede interação com texto invisível */
+        }
+        
+        /* CONTEÚDO PRINCIPAL - LÓGICA CORRIGIDA */
         .main-content {
             flex-grow: 1;
             padding: 1.5rem;
+            margin-left: var(--sidebar-width); /* Espaço para a sidebar */
             transition: margin-left 0.3s ease;
         }
+        .sidebar.collapsed ~ .main-content {
+            margin-left: var(--sidebar-width-collapsed);
+        }
+
         header {
             display: flex;
             justify-content: space-between;
@@ -110,33 +129,33 @@
             padding: 0.5rem;
             border: none;
             background: none;
+            z-index: 201; /* Garante que o botão fique acima da sidebar no mobile */
         }
         .welcome-message h1 { font-size: 1.8rem; margin: 0; }
         .welcome-message p { margin: 0; color: var(--text-light-color); }
 
-        /* Restante do CSS (KPIs, Grids, etc) continua igual */
+        /* Estilos do restante da página (sem alterações) */
         .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin-bottom:2rem}.kpi-card{background-color:var(--card-bg-color);padding:1.5rem;border-radius:12px;box-shadow:0 4px 6px rgba(0,0,0,.05);border-left:5px solid;display:flex;flex-direction:column}.kpi-card.saldo{border-color:var(--primary-color)}.kpi-card.receitas{border-color:var(--success-color)}.kpi-card.despesas{border-color:var(--danger-color)}.kpi-card.clientes{border-color:var(--warning-color)}.kpi-card .title{font-size:.9rem;color:var(--text-light-color);margin-bottom:.5rem}.kpi-card .value{font-size:2rem;font-weight:700}.main-grid{display:grid;grid-template-columns:2fr 1fr;gap:1.5rem}.main-card{background-color:var(--card-bg-color);padding:1.5rem;border-radius:12px;box-shadow:0 4px 6px rgba(0,0,0,.05)}.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem}.card-header h2{margin:0;font-size:1.2rem}.card-header a{color:var(--primary-color);text-decoration:none;font-weight:600;font-size:.9rem}.transaction-list ul{list-style:none;padding:0;margin:0}.transaction-list li{display:flex;justify-content:space-between;align-items:center;padding:1rem 0;border-bottom:1px solid var(--border-color)}.transaction-list li:last-child{border-bottom:none}.transaction-info{display:flex;align-items:center;gap:1rem}.transaction-icon{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center}.receita .transaction-icon{background-color:#dcfce7;color:var(--success-color)}.despesa .transaction-icon{background-color:#fee2e2;color:var(--danger-color)}.transaction-details h3{font-size:1rem;margin:0}.transaction-details p{font-size:.9rem;margin:0;color:var(--text-light-color)}.transaction-amount{font-weight:600}.transaction-amount.receita{color:var(--success-color)}.transaction-amount.despesa{color:var(--danger-color)}.chart-placeholder{width:100%;height:250px;background:repeating-linear-gradient(45deg,#f3f4f6,#f3f4f6 10px,#e5e7eb 10px,#e5e7eb 20px);display:flex;align-items:center;justify-content:center;color:var(--text-light-color);font-weight:500;border-radius:8px}.shortcuts-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.shortcut-card{background-color:var(--bg-color);padding:1rem;border-radius:8px;text-align:center;color:var(--text-color);font-weight:600;font-size:.9rem;transition:transform .2s,box-shadow .2s}.shortcut-card:hover{transform:translateY(-4px);box-shadow:0 6px 12px rgba(0,0,0,.1);color:var(--primary-color)}.shortcut-card i{margin-bottom:.5rem}.fab{position:fixed;bottom:2rem;right:2rem;width:56px;height:56px;background-color:var(--primary-color);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(37,99,235,.4);cursor:pointer;transition:transform .2s}.fab:hover{transform:scale(1.1)}.skeleton{background-color:#e0e0e0;border-radius:4px;animation:pulse 1.5s infinite ease-in-out}@keyframes pulse{0%{opacity:.6}50%{opacity:1}100%{opacity:.6}}.skeleton-card{width:100%;height:120px}.skeleton-list-item{display:flex;gap:1rem;align-items:center;margin-bottom:1rem}.skeleton-avatar{width:40px;height:40px;border-radius:50%}.skeleton-line{flex:1;height:15px}.has-data{display:none}.empty-state{text-align:center;padding:3rem}.empty-state h3{font-size:1.2rem}.empty-state p{color:var(--text-light-color);margin-bottom:1.5rem}.empty-state .btn{background-color:var(--primary-color);color:#fff;padding:.8rem 1.5rem;border-radius:8px;font-weight:600}#toast{visibility:hidden;min-width:250px;background-color:#333;color:#fff;text-align:center;border-radius:8px;padding:1rem;position:fixed;z-index:101;left:50%;transform:translateX(-50%);bottom:30px;opacity:0;transition:.5s}#toast.show{visibility:visible;opacity:1;bottom:50px}
         
+        /* RESPONSIVIDADE - LÓGICA CORRIGIDA */
         @media (max-width: 992px) {
-            .main-grid { grid-template-columns: 1fr; }
             .sidebar {
-                position: fixed;
-                left: 0; top: 0;
-                transform: translateX(-100%);
-                z-index: 200;
-                transition: transform 0.3s ease;
+                transform: translateX(-100%); /* Escondido por padrão no mobile */
             }
             .sidebar.active {
-                transform: translateX(0);
+                transform: translateX(0); /* Mostra a sidebar no mobile */
             }
-            .main-content { margin-left: 0 !important; }
+            .main-content {
+                margin-left: 0; /* Conteúdo ocupa a tela toda */
+            }
+            .sidebar.collapsed { /* Ignora o estado colapsado no mobile */
+                width: var(--sidebar-width);
+            }
+            .sidebar.collapsed .logo-text,
+            .sidebar.collapsed .sidebar-nav a span {
+                opacity: 1;
+            }
         }
-        @media (max-width: 768px) {
-            .main-content { padding: 1rem; }
-            .header-left { gap: 0.5rem; }
-            .welcome-message h1 { font-size: 1.5rem; }
-        }
-
     </style>
 </head>
 <body>
@@ -148,114 +167,10 @@
             </div>
             <ul class="sidebar-nav">
                 <li><a href="dashboard.html" class="active"><i data-feather="grid"></i> <span>Dashboard</span></a></li>
-                <li><a href="transacoes.html"><i data-feather="repeat"></i> <span>Transações</span></a></li>
-                <li><a href="agendamentos.html"><i data-feather="calendar"></i> <span>Agendamentos</span></a></li>
-                <li><a href="cobrancas.html"><i data-feather="file-text"></i> <span>Cobranças</span></a></li>
-                <li><a href="relatorios.html"><i data-feather="bar-chart-2"></i> <span>Relatórios</span></a></li>
-                <li><a href="integracoes.html"><i data-feather="share-2"></i> <span>Integrações</span></a></li>
+                <li><a href="#"><i data-feather="repeat"></i> <span>Transações</span></a></li>
+                <li><a href="#"><i data-feather="calendar"></i> <span>Agendamentos</span></a></li>
+                <li><a href="#"><i data-feather="file-text"></i> <span>Cobranças</span></a></li>
+                <li><a href="#"><i data-feather="bar-chart-2"></i> <span>Relatórios</span></a></li>
+                <li><a href="#"><i data-feather="share-2"></i> <span>Integrações</span></a></li>
             </ul>
-            <ul class="sidebar-footer sidebar-nav">
-                 <li><a href="configuracoes.html"><i data-feather="settings"></i> <span>Configurações</span></a></li>
-                 <li><a href="#" id="logout-btn"><i data-feather="log-out"></i> <span>Sair</span></a></li>
-            </ul>
-        </aside>
-
-        <main class="main-content" id="main-content">
-            <header>
-                <div class="header-left">
-                    <button class="hamburger-btn" id="hamburger-btn">
-                        <i data-feather="menu"></i>
-                    </button>
-                    <div class="welcome-message">
-                        <h1 id="welcome-title">Seja bem-vindo 👋</h1>
-                        <p>Aqui está o resumo da sua vida financeira.</p>
-                    </div>
-                </div>
-            </header>
-
-            <div class="kpi-grid">
-                <div class="kpi-card skeleton-container"><div class="skeleton skeleton-card"></div></div>
-                <div class="kpi-card skeleton-container"><div class="skeleton skeleton-card"></div></div>
-                <div class="kpi-card skeleton-container"><div class="skeleton skeleton-card"></div></div>
-                <div class="kpi-card skeleton-container"><div class="skeleton skeleton-card"></div></div>
-                <div class="kpi-card saldo has-data"><span class="title">Saldo do Mês</span><span class="value">R$ 513,00</span></div>
-                <div class="kpi-card receitas has-data"><span class="title">Total de Receitas</span><span class="value">R$ 2.580,00</span></div>
-                <div class="kpi-card despesas has-data"><span class="title">Total de Despesas</span><span class="value">R$ 2.067,00</span></div>
-                <div class="kpi-card clientes has-data"><span class="title">Clientes Ativos</span><span class="value">12</span></div>
-            </div>
-            <div class="main-grid">
-                <div class="left-column">
-                    <div class="main-card"><div class="card-header"><h2>Receitas vs Despesas</h2></div><div class="chart-placeholder">Gráfico em breve</div></div>
-                    <div class="main-card" style="margin-top: 1.5rem;"><div class="card-header"><h2>Últimas Transações</h2><a href="#">Ver todas</a></div><div class="transaction-list skeleton-container"><div class="skeleton-list-item"><div class="skeleton skeleton-avatar"></div> <div class="skeleton skeleton-line"></div></div><div class="skeleton-list-item"><div class="skeleton skeleton-avatar"></div> <div class="skeleton skeleton-line"></div></div><div class="skeleton-list-item"><div class="skeleton skeleton-avatar"></div> <div class="skeleton skeleton-line"></div></div></div><div class="transaction-list has-data"><ul><li class="receita"><div class="transaction-info"><div class="transaction-icon"><i data-feather="arrow-down"></i></div><div class="transaction-details"><h3>Bônus emprego</h3><p>Salário</p></div></div><span class="transaction-amount receita">+ R$ 2.580,00</span></li><li class="despesa"><div class="transaction-info"><div class="transaction-icon"><i data-feather="arrow-up"></i></div><div class="transaction-details"><h3>Aluguel mensal</h3><p>Moradia</p></div></div><span class="transaction-amount despesa">- R$ 990,00</span></li><li class="despesa"><div class="transaction-info"><div class="transaction-icon"><i data-feather="arrow-up"></i></div><div class="transaction-details"><h3>Curso FlutterFlow</h3><p>Capacitação</p></div></div><span class="transaction-amount despesa">- R$ 697,00</span></li></ul></div><div class="empty-state" style="display: none;"><i data-feather="coffee" style="width: 48px; height: 48px; color: var(--text-light-color); margin-bottom: 1rem;"></i><h3>Nenhuma transação registrada.</h3><p>Adicione sua primeira receita ou despesa para começar.</p><a href="#" class="btn">Adicionar Transação</a></div></div>
-                </div>
-                <div class="right-column">
-                    <div class="main-card"><div class="card-header"><h2>Atalhos Rápidos</h2></div><div class="shortcuts-grid"><a href="#" class="shortcut-card"><i data-feather="plus-circle"></i> Nova Transação</a><a href="#" class="shortcut-card"><i data-feather="user-plus"></i> Novo Cliente</a><a href="#" class="shortcut-card"><i data-feather="file-text"></i> Nova Cobrança</a><a href="#" class="shortcut-card"><i data-feather="calendar"></i> Novo Agendamento</a></div></div>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <a class="fab"><i data-feather="plus" style="width: 28px; height: 28px;"></i></a>
-    <div id="toast"></div>
-
-    <script>
-        feather.replace();
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const userName = localStorage.getItem('kintsukUserName');
-            if (userName) {
-                const firstName = userName.split(' ')[0];
-                document.getElementById('welcome-title').innerHTML = `Seja bem-vindo, ${firstName} 👋`;
-            }
-            
-            setTimeout(() => {
-                document.querySelectorAll('.skeleton-container').forEach(el => el.style.display = 'none');
-                document.querySelectorAll('.has-data').forEach(el => el.style.display = 'block');
-                document.querySelector('.kpi-grid').style.display = 'grid';
-                document.querySelector('.transaction-list.has-data').style.display = 'block';
-            }, 500); // Versão Rápida
-
-            // ===== NOVA LÓGICA DO SIDEBAR =====
-            const hamburgerBtn = document.getElementById('hamburger-btn');
-            const sidebar = document.getElementById('sidebar-nav');
-            const mainContent = document.getElementById('main-content');
-            
-            hamburgerBtn.addEventListener('click', () => {
-                sidebar.classList.toggle('collapsed');
-                // Adiciona margem ao conteúdo principal no desktop
-                if (window.innerWidth > 992) {
-                    const newMargin = sidebar.classList.contains('collapsed') ? 'var(--sidebar-width-collapsed)' : 'var(--sidebar-width)';
-                    mainContent.style.marginLeft = newMargin;
-                } else {
-                    sidebar.classList.toggle('active'); // Para mobile
-                }
-            });
-
-            // Lógica do botão de Sair
-            const logoutBtn = document.getElementById('logout-btn');
-            logoutBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                // Limpa o nome do usuário salvo
-                localStorage.removeItem('kintsukUserName');
-                // Redireciona para a página inicial
-                window.location.href = 'index.html';
-            });
-            // ===================================
-        });
-
-        function showToast(message) {
-            const toast = document.getElementById("toast");
-            toast.textContent = message;
-            toast.className = "show";
-            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
-        }
-
-        document.querySelectorAll('.shortcut-card, .fab').forEach(button => {
-            button.addEventListener('click', (e) => {
-                e.preventDefault();
-                showToast('Funcionalidade em desenvolvimento!');
-            });
-        });
-    </script>
-</body>
-</html>
+            <ul class="sidebar
